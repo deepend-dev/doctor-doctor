@@ -1,14 +1,7 @@
 import React from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
+import {AppBar, Toolbar, IconButton, Typography, InputBase, Button, Link} from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
-import Button from '@material-ui/core/Button';
-import Link from '@material-ui/core/Link'
+import {Menu, Search} from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     navbar__root: {
@@ -75,41 +68,47 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
     },
     navbar__sideButtonsButton: {
+        margin: theme.spacing(0, 1),
+        '&:hover': {
+            backgroundColor: fade(theme.palette.common.white, 0.25),
+        },
+    },
+    navbar__sideButtonsLoginButton: {
         margin: theme.spacing(0, 1)
     },
 }));
 
 function Navbar() {
 
-    const classes = useStyles();
+    const css = useStyles();
 
     const preventDefault = (event) => event.preventDefault();
 
     return (
-        <div className={classes.navbar__root}>
+        <div className={css.navbar__root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.navbar__menuButton} color="inherit" aria-label="open drawer">
-                        <MenuIcon />
+                    <IconButton edge="start" className={css.navbar__menuButton} color="inherit" aria-label="open drawer">
+                        <Menu />
                     </IconButton>
 
                     <Link href="/" color='inherit' onClick={preventDefault} underline='none'>
-                        <Typography className={classes.navbar__title} variant="h6" noWrap>
+                        <Typography className={css.navbar__title} variant="h6" noWrap>
                             Doctor-Doctor
                         </Typography>
                     </Link>
 
-                    <div className={classes.navbar__search}>
-                        <div className={classes.navbar__searchIcon}>
-                            <SearchIcon />
+                    <div className={css.navbar__search}>
+                        <div className={css.navbar__searchIcon}>
+                            <Search />
                         </div>
-                        <InputBase placeholder="Search…" classes={{ root: classes.navbar__inputRoot, input: classes.navbar__inputInput, }} inputProps={{ 'aria-label': 'search' }} />
+                        <InputBase placeholder="Search…" classes={{ root: css.navbar__inputRoot, input: css.navbar__inputInput, }} inputProps={{ 'aria-label': 'search' }} />
                     </div>
 
                     <div className="navbar__sideButtons">
-                        <Button color='inherit' size='small' variant='outlined' className={classes.navbar__sideButtonsButton}>Doctors</Button>
-                        <Button color='inherit' size='small' variant='outlined' className={classes.navbar__sideButtonsButton}>Patients</Button>
-                        <Button color='Secondary' size='small' variant='contained' className={classes.navbar__sideButtonsButton} href="/login">Login / Signup</Button>
+                        <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Doctors</Button>
+                        <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Patients</Button>
+                        <Button color='Secondary' size='small' variant='contained' className={css.navbar__sideButtonsLoginButton} href="/login">Login / Signup</Button>
                     </div>
                 </Toolbar>
             </AppBar>
