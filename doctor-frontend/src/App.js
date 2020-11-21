@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import Home from './components/Home/Home';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import NavBar from './components/NavBar/Navbar'
+import NavBar from './components/NavBar/Navbar';
 
 const theme = createMuiTheme({
   palette: {
