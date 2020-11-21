@@ -1,7 +1,7 @@
 import React from 'react';
-import {AppBar, Toolbar, IconButton, Typography, InputBase, Button, Link} from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Link } from '@material-ui/core';
 import { fade, makeStyles } from '@material-ui/core/styles';
-import {Menu, Search} from '@material-ui/icons';
+import { Menu, Search } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
     navbar__root: {
@@ -11,14 +11,17 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     navbar__menuButton: {
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(1),
+        [theme.breakpoints.up("sm")]: {
+            display: 'none'
+        }
     },
     navbar__title: {
         display: 'none',
         [theme.breakpoints.up('sm')]: {
             display: 'block',
+            marginRight: theme.spacing(2)
         },
-        marginRight: theme.spacing(2)
     },
     navbar__search: {
         display: 'flex',
@@ -30,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
         marginLeft: 0,
-        marginRight: theme.spacing(2),
+        marginRight: theme.spacing(4),
         width: '100%',
         [theme.breakpoints.up('sm')]: {
             marginLeft: theme.spacing(1),
@@ -63,18 +66,23 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     navbar__sideButtons: {
-        display: 'flex',
-        flex: 1,
-        justifyContent: 'space-between',
+        display: "none",
+        [theme.breakpoints.up("sm")]: {
+            display: 'flex',
+            justifyContent: 'space-between'
+        }
     },
     navbar__sideButtonsButton: {
-        margin: theme.spacing(0, 1),
+        marginRight: '10px',
+        maxHeight: '30px',
+        width: '90px',
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
         },
     },
     navbar__sideButtonsLoginButton: {
-        margin: theme.spacing(0, 1)
+        width: '90px',
+        maxHeight: '30px',
     },
 }));
 
@@ -105,10 +113,10 @@ function Navbar() {
                         <InputBase placeholder="Search…" classes={{ root: css.navbar__inputRoot, input: css.navbar__inputInput, }} inputProps={{ 'aria-label': 'search' }} />
                     </div>
 
-                    <div className="navbar__sideButtons">
+                    <div className={css.navbar__sideButtons}>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Doctors</Button>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Patients</Button>
-                        <Button color='Secondary' size='small' variant='contained' className={css.navbar__sideButtonsLoginButton} href="/login">Login / Signup</Button>
+                        <Button color='Secondary' size='small' variant='contained' className={css.navbar__sideButtonsLoginButton} href="/login">Login</Button>
                     </div>
                 </Toolbar>
             </AppBar>
