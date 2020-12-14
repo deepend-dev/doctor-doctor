@@ -29,7 +29,10 @@ function App() {
     <React.Fragment>
       <div className="app" >
         {!user ? (
-          <Login />
+          <>
+            <CssBaseline />
+            <Login />
+          </>
         ) : (
             <>
               <Router>
