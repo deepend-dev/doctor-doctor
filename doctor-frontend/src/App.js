@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -8,6 +8,7 @@ import Home from './components/Home/Home';
 import NavBar from './components/NavBar/Navbar';
 import Login from "./components/Login/Login";
 
+import { useStateValue } from './config/StateProvider'
 
 const theme = createMuiTheme({
   palette: {
@@ -22,7 +23,7 @@ const theme = createMuiTheme({
 
 function App() {
 
-  const [user, setUser] = useState(null);
+  const [{user}] = useStateValue();
 
   return (
     <React.Fragment>
@@ -42,10 +43,7 @@ function App() {
                     <Route path="/doctor-login">
                       <h1>This is doctor view</h1>
                     </Route>
-                    <Route path="/login">
-                      <h1>This is login page</h1>
-                    </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                       <Home />
                     </Route>
                   </Switch>

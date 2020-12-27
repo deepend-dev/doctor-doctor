@@ -1,33 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { makeStyles, Card, CardContent, Button } from '@material-ui/core';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import fireBaseConfig from '../../config/firebaseConfig'
+import { useStateValue } from '../../config/StateProvider';
+import { actionTypes } from '../../config/reducer'
 
 
 !firebase.apps.length ? firebase.initializeApp(fireBaseConfig) : firebase.app()
-
-// const ui = new firebaseui.auth.AuthUI(firebase.auth());
-
-const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: firebase.auth().isSignInWithEmailLink(window.location.href) ? 'redirect' : 'popup',
-    // We will display Google and Facebook as auth providers.
-    signInOptions: [
-        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        {
-            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-            signInMethod: firebase.auth.EmailAuthProvider.PROVIDER_ID
-        }
-    ],
-    callbacks: {
-        // Avoid redirects after sign-in.
-        signInSuccessWithAuthResult: () => false,
-    },
-};
-
-
-// ui.start('#firebaseui-auth-container', uiConfig);
 
 const useStyles = makeStyles((theme) => ({
     login: {
@@ -49,39 +29,47 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
 
     const classes = useStyles();
-    const [user, setUser] = useState(null); // Local signed-in state.
+    const [{user}, dispatch] = useStateValue();
+
+    const uiConfig = {
+        // Popup signin flow rather than redirect flow.
+        signInFlow: firebase.auth().isSignInWithEmailLink(window.location.href) ? 'redirect' : 'popup',
+        // We will display Google and Facebook as auth providers.
+        signInOptions: [
+            firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+            {
+                provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                signInMethod: firebase.auth.EmailAuthProvider.PROVIDER_ID
+            }
+        ],
+        callbacks: {
+            // Avoid redirects after sign-in.
+            signInSuccessWithAuthResult: (authResult) => {
+                dispatch({
+                    type: actionTypes.SET_USER,
+                    user: authResult.user
+                })
+            },
+        },
+    };
 
     // Listen to the Firebase Auth state and set the local state.
-    useEffect(() => {
-        const registerAuthObserver = firebase.auth().onAuthStateChanged(returnedUser => {
-            setUser(returnedUser);
-        });
-        return () => registerAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
-    }, []);
-
     const signout = () => {
         firebase.auth().signOut();
+        dispatch({
+            type: actionTypes.SET_USER,
+            user: null
+        })
     }
-
-    console.log(user)
 
     return (
         <div className={classes.login}>
             <Card className={classes.login_Card}>
-                {user ? (
-                    <CardContent>
-                        <h1>My App</h1>
-                        <p>You are logged in as {user.displayName}</p>
-                        <Button color='inherit' size='small' variant='outlined' onClick={signout}>Sign Out!</Button>
-                    </CardContent>
-                ) : (
-                        <CardContent>
-                            <h1>My App</h1>
-                            <p>Please sign-in:</p>
-                            <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()}  uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-                        </CardContent>
-                    )
-                }
+                <CardContent>
+                    <h1>My App</h1>
+                    <p>Please sign-in:</p>
+                    <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()}  uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                </CardContent>
             </Card>
         </div>
     )
