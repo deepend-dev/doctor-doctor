@@ -5,7 +5,6 @@ import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
 import Home from './components/Home/Home';
-
 import NavBar from './components/NavBar/Navbar';
 import Login from "./components/Login/Login";
 
@@ -23,7 +22,7 @@ const theme = createMuiTheme({
 
 function App() {
 
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState(null);
 
   return (
     <React.Fragment>

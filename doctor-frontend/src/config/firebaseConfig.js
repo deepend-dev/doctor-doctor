@@ -1,4 +1,4 @@
-export const firebaseConfig = {
+const fireBaseConfig = {
   apiKey: "AIzaSyBCZfHHgEd0iYkGpXwFnPJLHrYHDOKmovQ",
   authDomain: "doctor-doctor-e69b6.firebaseapp.com",
   databaseURL: "https://doctor-doctor-e69b6.firebaseio.com",
@@ -7,3 +7,5 @@ export const firebaseConfig = {
   messagingSenderId: "345689833495",
   appId: "1:345689833495:web:afdc743b5d1a5af8a51c52"
 };
+
+export default fireBaseConfig;

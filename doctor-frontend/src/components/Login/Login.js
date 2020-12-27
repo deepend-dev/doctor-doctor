@@ -1,33 +1,31 @@
-import React from 'react'
-import { makeStyles, Card, CardContent } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { makeStyles, Card, CardContent, Button } from '@material-ui/core';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
-import firebaseui from 'react-firebaseui';
+import fireBaseConfig from '../../config/firebaseConfig'
+
+
+!firebase.apps.length ? firebase.initializeApp(fireBaseConfig) : firebase.app()
 
 // const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-// var uiConfig = {
-//     callbacks: {
-//       signInSuccessWithAuthResult: function(authResult, redirectUrl) {
-//         // User successfully signed in.
-//         // Return type determines whether we continue the redirect automatically
-//         // or whether we leave that to developer to handle.
-//         return true;
-//       },
-//       uiShown: function() {
-//         // The widget is rendered.
-//         // Hide the loader.
-//         document.getElementById('loader').style.display = 'none';
-//       }
-//     },
-//     // Will use popup for IDP Providers sign-in flow instead of the default, redirect.
-//     signInFlow: 'popup',
-//     signInSuccessUrl: '<url-to-redirect-to-on-success>',
-//     signInOptions: [
-//       // Leave the lines as is for the providers you want to offer your users.
-//       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-//       firebase.auth.EmailAuthProvider.PROVIDER_ID,
-//     ],
-// };
+const uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: firebase.auth().isSignInWithEmailLink(window.location.href) ? 'redirect' : 'popup',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        {
+            provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+            signInMethod: firebase.auth.EmailAuthProvider.PROVIDER_ID
+        }
+    ],
+    callbacks: {
+        // Avoid redirects after sign-in.
+        signInSuccessWithAuthResult: () => false,
+    },
+};
+
 
 // ui.start('#firebaseui-auth-container', uiConfig);
 
@@ -51,13 +49,39 @@ const useStyles = makeStyles((theme) => ({
 function Login() {
 
     const classes = useStyles();
+    const [user, setUser] = useState(null); // Local signed-in state.
+
+    // Listen to the Firebase Auth state and set the local state.
+    useEffect(() => {
+        const registerAuthObserver = firebase.auth().onAuthStateChanged(returnedUser => {
+            setUser(returnedUser);
+        });
+        return () => registerAuthObserver(); // Make sure we un-register Firebase observers when the component unmounts.
+    }, []);
+
+    const signout = () => {
+        firebase.auth().signOut();
+    }
+
+    console.log(user)
 
     return (
         <div className={classes.login}>
             <Card className={classes.login_Card}>
-                <CardContent>
-                    Login
-                </CardContent>
+                {user ? (
+                    <CardContent>
+                        <h1>My App</h1>
+                        <p>You are logged in as {user.displayName}</p>
+                        <Button color='inherit' size='small' variant='outlined' onClick={signout}>Sign Out!</Button>
+                    </CardContent>
+                ) : (
+                        <CardContent>
+                            <h1>My App</h1>
+                            <p>Please sign-in:</p>
+                            <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()}  uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+                        </CardContent>
+                    )
+                }
             </Card>
         </div>
     )
