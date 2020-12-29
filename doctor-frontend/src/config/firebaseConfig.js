@@ -1,4 +1,6 @@
-const firebaseConfig = {
+import firebase from 'firebase';
+
+const fireBaseConfig = {
   apiKey: "AIzaSyBCZfHHgEd0iYkGpXwFnPJLHrYHDOKmovQ",
   authDomain: "doctor-doctor-e69b6.firebaseapp.com",
   databaseURL: "https://doctor-doctor-e69b6.firebaseio.com",
@@ -8,4 +10,10 @@ const firebaseConfig = {
   appId: "1:345689833495:web:afdc743b5d1a5af8a51c52"
 };
 
-console.log(firebaseConfig)
+const firebaseApp = firebase.initializeApp(fireBaseConfig);
+
+const db = firebaseApp.firestore();
+const auth = firebase.auth();
+const providers = firebase.auth
+
+export {db, auth, providers};
