@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles, Card, CardContent, CardMedia } from '@material-ui/core';
+import { makeStyles, Card, CardContent, Divider } from '@material-ui/core';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
-import {auth, providers} from '../../config/firebaseConfig'
+import { auth, providers } from '../../config/firebaseConfig'
 import { useStateValue } from '../../config/StateProvider';
 import { actionTypes } from '../../config/reducer';
 import illustrative from '../../assets/undraw_doctor_kw5l.svg';
@@ -18,13 +18,33 @@ const useStyles = makeStyles((theme) => ({
         height: '100%',
         width: '100%',
         [theme.breakpoints.up('sm')]: {
-            height: '600px',
-            width: '600px',
+            height: '400px',
+            width: '800px'
         },
-        display: 'flex'
+    },
+    login__CardContent: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: '100%',
+        width: '100%',
+
+        [theme.breakpoints.up('sm')]: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-around',
+        }
+    },
+    login__Divider: {
+        [theme.breakpoints.down('xs')]: {
+            display: 'none'
+        }
     },
     media: {
-
+        height: '250px',
+        objectFit: 'contain',
+        marginRight: '10px',
     }
 }));
 
@@ -57,13 +77,13 @@ function Login() {
     return (
         <div className={classes.login}>
             <Card className={classes.login_Card}>
-                <CardContent>
-                    <CardMedia className={classes.media}
+                <CardContent className={classes.login__CardContent}>
+                    <img className={classes.media}
                         src={illustrative}
-                        component="img"
-                        title="illustrative"
+                        alt="illustrative"
                     />
-                    <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()}  uiConfig={uiConfig} firebaseAuth={auth} />
+                    <Divider className={classes.login__Divider} orientation="vertical" flexItem />
+                    <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={uiConfig} firebaseAuth={auth} />
                 </CardContent>
             </Card>
         </div>
