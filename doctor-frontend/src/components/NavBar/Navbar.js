@@ -1,8 +1,11 @@
 import React from 'react';
-import { AppBar, Toolbar, IconButton, Typography, InputBase, Button } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Avatar } from '@material-ui/core';
+import { PowerSettingsNewRounded } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Menu, Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+import { useStateValue } from '../../config/StateProvider';
+import {auth} from '../../config/firebaseConfig';
 
 const useStyles = makeStyles((theme) => ({
     navbar__root: {
@@ -22,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'white',
         [theme.breakpoints.up('sm')]: {
             display: 'block',
-            margin: theme.spacing(0,2,0,2)
+            margin: theme.spacing(0, 2, 0, 2)
         },
     },
     navbar__search: {
@@ -71,12 +74,12 @@ const useStyles = makeStyles((theme) => ({
         display: "none",
         [theme.breakpoints.up("sm")]: {
             display: 'flex',
-            justifyContent: 'space-between'
+            justifyContent: 'space-between',
+            alignItems: 'center'
         }
     },
     navbar__sideButtonsButton: {
         marginRight: '10px',
-        maxHeight: '30px',
         width: '90px',
         '&:hover': {
             backgroundColor: fade(theme.palette.common.white, 0.25),
@@ -84,13 +87,33 @@ const useStyles = makeStyles((theme) => ({
     },
     navbar__sideButtonsLoginButton: {
         width: '90px',
-        maxHeight: '30px',
     },
+    navbar__avatar: {
+        // marginRight: '10px',
+        width: theme.spacing(4),
+        height: theme.spacing(4)
+    },
+    navbar__icon: {
+        marginLeft: '2px',
+        width: theme.spacing(5),
+        height: theme.spacing(5)
+    }
 }));
 
 function Navbar() {
 
     const css = useStyles();
+    // eslint-disable-next-line
+    const [{ user } ] = useStateValue();
+
+    const signout = () => {
+        auth.signOut().then( () => {
+            // Sign-out successful.
+          }).catch(err => {
+            // An error happened.
+            console.log(err)
+          });
+    }
 
     return (
         <div className={css.navbar__root}>
@@ -116,7 +139,10 @@ function Navbar() {
                     <div className={css.navbar__sideButtons}>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton} href="/doctor-login">Doctors</Button>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Patients</Button>
-                        <Button color='secondary' size='small' variant='contained' className={css.navbar__sideButtonsLoginButton} href="/login">Login</Button>
+                        <Avatar alt={user?.displayName} src={user?.photoURL} className={css.navbar__avatar} />
+                        <IconButton color="inherit" className={css.navbar__icon} onClick={signout}>
+                            <PowerSettingsNewRounded  />
+                        </IconButton>
                     </div>
                 </Toolbar>
             </AppBar>

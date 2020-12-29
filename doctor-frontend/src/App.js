@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import NavBar from './components/NavBar/Navbar';
 import Login from "./components/Login/Login";
 
 import { useStateValue } from './config/StateProvider'
+import { auth } from './config/firebaseConfig'
 
 const theme = createMuiTheme({
   palette: {
@@ -23,7 +24,14 @@ const theme = createMuiTheme({
 
 function App() {
 
-  const [{user}] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
+
+  useEffect(() => {
+
+    auth.onAuthStateChanged(authUser => {
+      authUser ? dispatch({ type: 'SET_USER', user: authUser }) : dispatch({ type: 'UNSET_USER' })
+    })
+  }, [dispatch])
 
   return (
     <React.Fragment>
