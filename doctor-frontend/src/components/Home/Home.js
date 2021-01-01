@@ -29,15 +29,15 @@ const useStyles = makeStyles((theme) => ({
 
 function Home() {
 
-    const classes = useStyles();
+    const css = useStyles();
 
     return (
-      <Container maxWidth='lg' className={classes.root}>
-        <Paper className={classes.paper}>
+      <Container maxWidth='lg' className={css.root}>
+        <Paper className={css.paper}>
             <Grid container spacing={2}>
                 <Grid item>
-                    <ButtonBase className={classes.image}>
-                        <img className={classes.img} alt="complex" src="https://material-ui.com/static/images/grid/complex.jpg" />
+                    <ButtonBase className={css.image}>
+                        <img className={css.img} alt="complex" src="https://material-ui.com/static/images/grid/complex.jpg" />
                     </ButtonBase>
                 </Grid>
                 <Grid item xs={12} sm container>
@@ -66,11 +66,11 @@ function Home() {
             </Grid>
         </Paper>
 
-        <Paper className={classes.paper}>
+        <Paper className={css.paper}>
             <Grid container spacing={2}>
                 <Grid item>
-                    <ButtonBase className={classes.image}>
-                        <img className={classes.img} alt="complex" src="https://material-ui.com/static/images/grid/complex.jpg" />
+                    <ButtonBase className={css.image}>
+                        <img className={css.img} alt="complex" src="https://material-ui.com/static/images/grid/complex.jpg" />
                     </ButtonBase>
                 </Grid>
                 <Grid item xs={12} sm container>

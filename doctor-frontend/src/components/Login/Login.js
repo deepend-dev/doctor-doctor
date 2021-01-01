@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Login() {
 
-    const classes = useStyles();
+    const css = useStyles();
     // eslint-disable-next-line
     const [{ user }, dispatch] = useStateValue();
 
@@ -75,14 +75,14 @@ function Login() {
     };
 
     return (
-        <div className={classes.login}>
-            <Card className={classes.login_Card}>
-                <CardContent className={classes.login__CardContent}>
-                    <img className={classes.media}
+        <div className={css.login}>
+            <Card className={css.login_Card}>
+                <CardContent className={css.login__CardContent}>
+                    <img className={css.media}
                         src={illustrative}
                         alt="illustrative"
                     />
-                    <Divider className={classes.login__Divider} orientation="vertical" flexItem />
+                    <Divider className={css.login__Divider} orientation="vertical" flexItem />
                     <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={uiConfig} firebaseAuth={auth} />
                 </CardContent>
             </Card>
