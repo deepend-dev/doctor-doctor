@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 
-import Home from './components/Home/Home';
+import Dashboard from './components/Dashboard/Dashboard';
 import NavBar from './components/NavBar/Navbar';
 import Login from "./components/Login/Login";
 
@@ -52,7 +52,7 @@ function App() {
                       <h1>This is doctor view</h1>
                     </Route>
                     <Route exact path="/">
-                      <Home />
+                      <Dashboard />
                     </Route>
                   </Switch>
                 </MuiThemeProvider>

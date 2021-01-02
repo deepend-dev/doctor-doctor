@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Home() {
+function Dashboard() {
 
     const css = useStyles();
 
@@ -102,4 +102,4 @@ function Home() {
     );
 }
 
-export default Home
+export default Dashboard

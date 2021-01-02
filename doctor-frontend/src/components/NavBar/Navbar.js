@@ -138,7 +138,7 @@ function Navbar() {
 
                     <div className={css.navbar__sideButtons}>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton} href="/doctor-login">Doctors</Button>
-                        <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Patients</Button>
+                        <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton} href="/patients">Patients</Button>
                         <Avatar alt={user?.displayName} src={user?.photoURL} className={css.navbar__avatar} />
                         <IconButton color="inherit" className={css.navbar__icon} onClick={signout}>
                             <PowerSettingsNewRounded  />
