@@ -4,6 +4,7 @@ import NewPatients from './NewPatients';
 
 
 function Patients() {
+
     return (
         <Container maxWidth='lg'>
             <NewPatients />
