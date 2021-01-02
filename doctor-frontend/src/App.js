@@ -7,6 +7,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Dashboard from './components/Dashboard/Dashboard';
 import NavBar from './components/NavBar/Navbar';
 import Login from "./components/Login/Login";
+import Patients from "./components/Patients/Patients"
 
 import { useStateValue } from './config/StateProvider'
 import { auth } from './config/firebaseConfig'
@@ -50,6 +51,9 @@ function App() {
                   <Switch>
                     <Route path="/doctor-login">
                       <h1>This is doctor view</h1>
+                    </Route>
+                    <Route path="/patients">
+                      <Patients />
                     </Route>
                     <Route exact path="/">
                       <Dashboard />
