@@ -106,7 +106,7 @@ function Navbar() {
 
     const css = useStyles();
     // eslint-disable-next-line
-    const [{ user } ] = useStateValue();
+    const   { state, dispatch } = useStateValue();
 
     const signout = () => {
         auth.signOut().then( () => {
@@ -141,7 +141,7 @@ function Navbar() {
                     <div className={css.navbar__sideButtons}>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton} href="/doctor-login">Doctors</Button>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Patients</Button>
-                        <Avatar alt={user?.displayName} src={user?.photoURL} className={css.navbar__avatar} />
+                        <Avatar alt={state.user?.displayName} src={state.user?.photoURL} className={css.navbar__avatar} />
                         <IconButton color="inherit" className={css.navbar__icon} onClick={signout}>
                             <PowerSettingsNewRounded  />
                         </IconButton>

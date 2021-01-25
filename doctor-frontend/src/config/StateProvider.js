@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer } from 'react';
 
 const initialState = {
     user: null,
@@ -37,4 +37,6 @@ const StateProvider = ({ children }) => {
     </StateContext.Provider>
 };
 
-export { StateContext, StateProvider }
+const useStateValue = () => useContext(StateContext)
+
+export { StateContext, StateProvider, useStateValue }

@@ -1,11 +1,5 @@
 import React from 'react';
 import { makeStyles, Card, CardContent, Divider } from '@material-ui/core';
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-
-import { auth, providers } from '../../config/firebaseConfig'
-
-import { useStateValue } from '../../config/StateProvider';
-import { actionTypes } from '../../config/reducer';
 
 import illustrative from '../../assets/undraw_doctor_kw5l.svg';
 
@@ -54,27 +48,6 @@ function Login() {
 
     const css = useStyles();
     // eslint-disable-next-line
-    const [{ user }, dispatch] = useStateValue();
-
-    const uiConfig = {
-        // Popup signin flow rather than redirect flow.
-        signInFlow: 'popup',
-        // We will display Google and Facebook as auth providers.
-        signInOptions: [
-            providers.EmailAuthProvider.PROVIDER_ID,
-            providers.GoogleAuthProvider.PROVIDER_ID
-        ],
-        signInSuccessUrl: '/',
-        callbacks: {
-            // Avoid redirects after sign-in.
-            signInSuccessWithAuthResult: (authResult) => {
-                dispatch({
-                    type: actionTypes.SET_USER,
-                    user: authResult.user
-                })
-            }
-        },
-    };
 
     return (
         <div className={css.login}>
@@ -85,7 +58,6 @@ function Login() {
                         alt="illustrative"
                     />
                     <Divider className={css.login__Divider} orientation="vertical" flexItem />
-                    <StyledFirebaseAuth uiCallback={ui => ui.disableAutoSignIn()} uiConfig={uiConfig} firebaseAuth={auth} />
                 </CardContent>
             </Card>
         </div>
