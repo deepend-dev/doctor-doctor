@@ -3,8 +3,10 @@ import { makeStyles, Card, CardContent, Divider } from '@material-ui/core';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 
 import { auth, providers } from '../../config/firebaseConfig'
+
 import { useStateValue } from '../../config/StateProvider';
 import { actionTypes } from '../../config/reducer';
+
 import illustrative from '../../assets/undraw_doctor_kw5l.svg';
 
 const useStyles = makeStyles((theme) => ({

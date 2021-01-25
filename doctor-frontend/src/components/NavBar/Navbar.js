@@ -4,7 +4,9 @@ import { PowerSettingsNewRounded } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Menu, Search } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
+
 import { useStateValue } from '../../config/StateProvider';
+
 import {auth} from '../../config/firebaseConfig';
 
 const useStyles = makeStyles((theme) => ({
