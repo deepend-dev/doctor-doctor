@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Avatar, Button, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, makeStyles, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import { toast } from 'react-toastify';
 
 import { auth } from '../../config/firebaseConfig'
 
@@ -83,7 +82,6 @@ const Register = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
-                <ToastContainer />
                 <form className={css.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {/* <Grid item xs={12} sm={6}>

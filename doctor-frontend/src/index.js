@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import reportWebVitals from './reportWebVitals';
-import { StateProvider } from './config/StateProvider';
+
 import { BrowserRouter } from "react-router-dom";
 import './index.css';
+import reportWebVitals from './reportWebVitals';
+import { StateProvider } from './config/StateProvider';
+import 'react-toastify/dist/ReactToastify.css'
+
 import App from './App';
 
 ReactDOM.render(

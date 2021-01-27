@@ -3,11 +3,13 @@ import './App.css';
 import { Switch, Route } from "react-router-dom";
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import { ToastContainer } from "react-toastify";
 
 import Home from './components/Home/Home';
 import NavBar from './components/NavBar/Navbar';
 import Register from "./components/Login/Register";
 import Login from "./components/Login/Login";
+
 
 const theme = createMuiTheme({
   palette: {
@@ -27,6 +29,7 @@ function App() {
       <>
         <CssBaseline />
         <MuiThemeProvider theme={theme}>
+          <ToastContainer />
           <Switch>
             <Route exact path="/">
               <NavBar />
