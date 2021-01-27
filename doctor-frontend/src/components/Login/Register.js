@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { Avatar, Button, TextField, FormControlLabel, Checkbox, Link, Grid, Box, Typography, makeStyles, Container } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'
+
+import { auth } from '../../config/firebaseConfig'
 
 function Copyright() {
     return (
@@ -45,8 +49,29 @@ const Register = () => {
 
     const css = useStyles();
 
-    const handleSubmit = () => {
-        //
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        setLoading(true)
+        const config = {
+            url: process.env.REACT_APP_CONFIRMATION_EMAIL_REDIRECT,
+            handleCodeInApp: true
+        }
+
+        await auth.sendSignInLinkToEmail(Email, config)
+            .then((result) => {
+                // show toast notification to user
+                console.log(result)
+                toast.success(`Confirmation email sent to ${Email}`)
+                window.localStorage.setItem('emailFormRegistration', Email)
+            })
+            .catch((err) => {
+                toast.error('Encountered Error!!')
+                console.log(err)
+            })
+
+        // clear state
+        setEmail('')
+        setLoading(false)
     }
 
     return (
@@ -58,6 +83,7 @@ const Register = () => {
                 <Typography component="h1" variant="h5">
                     Sign up
                 </Typography>
+                <ToastContainer />
                 <form className={css.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
                         {/* <Grid item xs={12} sm={6}>
