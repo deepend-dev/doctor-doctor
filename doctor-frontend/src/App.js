@@ -9,6 +9,7 @@ import Home from './components/Home/Home';
 import NavBar from './components/NavBar/Navbar';
 import Register from "./components/Login/Register";
 import Login from "./components/Login/Login";
+import CompleteRegistration from "./components/Login/CompleteRegistration"
 
 
 const theme = createMuiTheme({
@@ -37,6 +38,7 @@ function App() {
             </Route>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/complete-registration" component={CompleteRegistration} />
           </Switch>
         </MuiThemeProvider>
       </>
