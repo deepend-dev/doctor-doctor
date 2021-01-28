@@ -30,8 +30,14 @@ const CompleteRegistration = () => {
         }
 
         await auth.signInWithEmailLink(Email, window.location.href)
-            .then((response) => {
-                console.log(response)
+            .then(async (response) => {
+                // console.log(response)
+                if (response.user.emailVerified) {
+                    window.localStorage.removeItem('emailForRegistration')
+                    let user = auth.currentUser
+
+                    await user.updatePassword(Password)
+                }
                 toast.success('User Added!')
             })
             .catch((err) => {
