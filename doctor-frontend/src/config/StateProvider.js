@@ -31,17 +31,10 @@ const StateProvider = ({ children }) => {
             if (user) {
                 const idToken = await user.getIdTokenResult();
 
-                const dispatcho = {
-                    type: 'LOGGED_IN_USER',
-                    payload: { email: user.email, token: idToken.token }
-                }
-
                 dispatch({
                     type: 'LOGGED_IN_USER',
                     payload: { email: user.email, token: idToken.token }
                 });
-
-                console.log('stateprovider2', dispatcho)
             }
             else {
 
@@ -50,10 +43,11 @@ const StateProvider = ({ children }) => {
                     payload: null
                 });
             }
-        });
 
-        return () => unsubscribe();
+            return () => unsubscribe()
+        });
     }, []);
+
 
     return <StateContext.Provider value={value}>
         {children}

@@ -13,7 +13,7 @@ const CompleteRegistration = () => {
     const [Loading, setLoading] = useState(false);
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
-    const { state, dispatch } = useStateValue();
+    const { dispatch } = useStateValue();
 
     const css = useStyles();
     let history = useHistory();
@@ -48,8 +48,6 @@ const CompleteRegistration = () => {
                         payload: { email: user.email, token: idToken.token }
                     });
 
-                    console.log('registration', state)
-
                     // update local mongo db user
 
                     // Redirect
@@ -58,8 +56,6 @@ const CompleteRegistration = () => {
                     // throw success toast
                     toast.success('User Added!');
                 };
-
-
             })
             .catch((err) => {
                 toast.error(err.message)
@@ -151,7 +147,7 @@ const CompleteRegistration = () => {
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/login" variant="body2">
                                 Already have an account? Sign in
                             </Link>
                         </Grid>
