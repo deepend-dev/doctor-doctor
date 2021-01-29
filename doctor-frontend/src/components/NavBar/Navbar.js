@@ -3,9 +3,12 @@ import { AppBar, Toolbar, IconButton, Typography, InputBase, Button, Avatar } fr
 import { PowerSettingsNewRounded } from '@material-ui/icons';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import { Menu, Search } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+
 import { useStateValue } from '../../config/StateProvider';
-import {auth} from '../../config/firebaseConfig';
+
+import { auth } from '../../config/firebaseConfig';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles((theme) => ({
     navbar__root: {
@@ -104,15 +107,24 @@ function Navbar() {
 
     const css = useStyles();
     // eslint-disable-next-line
-    const [{ user } ] = useStateValue();
+    const { state, dispatch } = useStateValue();
+    const history = useHistory()
 
     const signout = () => {
-        auth.signOut().then( () => {
+        auth.signOut().then(() => {
             // Sign-out successful.
-          }).catch(err => {
+            dispatch({
+                type: 'LOGGED_IN_USER',
+                payload: null
+            });
+
+            toast.success('user logged out!')
+            history.push('/login');
+
+        }).catch(err => {
             // An error happened.
-            console.log(err)
-          });
+            toast.error(err)
+        });
     }
 
     return (
@@ -139,9 +151,9 @@ function Navbar() {
                     <div className={css.navbar__sideButtons}>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton} href="/doctor-login">Doctors</Button>
                         <Button color='inherit' size='small' variant='outlined' className={css.navbar__sideButtonsButton}>Patients</Button>
-                        <Avatar alt={user?.displayName} src={user?.photoURL} className={css.navbar__avatar} />
+                        <Avatar alt={state.user?.displayName} src={state.user?.photoURL} className={css.navbar__avatar} />
                         <IconButton color="inherit" className={css.navbar__icon} onClick={signout}>
-                            <PowerSettingsNewRounded  />
+                            <PowerSettingsNewRounded />
                         </IconButton>
                     </div>
                 </Toolbar>

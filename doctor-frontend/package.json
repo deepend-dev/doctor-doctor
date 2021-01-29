@@ -1,6 +1,6 @@
 {
   "name": "doctor-frontend",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.11.2",
@@ -12,9 +12,9 @@
     "firebase-tools": "^9.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-firebaseui": "^4.1.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.0",
+    "react-toastify": "^7.0.1",
     "web-vitals": "^0.2.4"
   },
   "scripts": {
