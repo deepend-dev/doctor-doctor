@@ -5,13 +5,15 @@ import { auth } from '../../config/firebaseConfig';
 import { toast } from 'react-toastify';
 import { useHistory } from 'react-router-dom';
 
-import { useStyles, Copyright } from './registerStyles'
+import { useStyles, Copyright } from './registerStyles';
+import { useStateValue } from '../../config/StateProvider';
 
 const CompleteRegistration = () => {
 
     const [Loading, setLoading] = useState(false);
     const [Email, setEmail] = useState('');
     const [Password, setPassword] = useState('');
+    const { state, dispatch } = useStateValue();
 
     const css = useStyles();
     let history = useHistory();
@@ -33,12 +35,31 @@ const CompleteRegistration = () => {
             .then(async (response) => {
                 // console.log(response)
                 if (response.user.emailVerified) {
-                    window.localStorage.removeItem('emailForRegistration')
-                    let user = auth.currentUser
 
-                    await user.updatePassword(Password)
-                }
-                toast.success('User Added!')
+                    const user = auth.currentUser;
+
+                    window.localStorage.removeItem('emailForRegistration');
+                    await user.updatePassword(Password);
+
+                    const idToken = await user.getIdTokenResult();
+
+                    dispatch({
+                        type: 'LOGGED_IN_USER',
+                        payload: { email: user.email, token: idToken.token }
+                    });
+
+                    console.log('registration', state)
+
+                    // update local mongo db user
+
+                    // Redirect
+                    history.push('/');
+
+                    // throw success toast
+                    toast.success('User Added!');
+                };
+
+
             })
             .catch((err) => {
                 toast.error(err.message)

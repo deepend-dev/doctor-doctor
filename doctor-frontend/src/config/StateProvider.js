@@ -1,25 +1,17 @@
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
+
+import { auth } from './firebaseConfig';
 
 const initialState = {
-    user: null,
-};
-
-const actionTypes = {
-    LOGGED_IN_USER: "LOGGED_IN_USER",
-    UNSET_USER: "UNSET_USER"
+    user: null
 };
 
 const reducer = (state, action) => {
     switch (action.type) {
-        case actionTypes.LOGGED_IN_USER:
+        case 'LOGGED_IN_USER':
             return {
                 ...state,
                 user: action.payload
-            };
-        case actionTypes.UNSET_USER:
-            return {
-                ...state,
-                user: null
             };
         default:
             return state;
@@ -27,16 +19,46 @@ const reducer = (state, action) => {
 };
 
 const StateContext = createContext();
+const useStateValue = () => useContext(StateContext)
 
 const StateProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
     const value = { state, dispatch }
+
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged(async user => {
+
+            if (user) {
+                const idToken = await user.getIdTokenResult();
+
+                const dispatcho = {
+                    type: 'LOGGED_IN_USER',
+                    payload: { email: user.email, token: idToken.token }
+                }
+
+                dispatch({
+                    type: 'LOGGED_IN_USER',
+                    payload: { email: user.email, token: idToken.token }
+                });
+
+                console.log('stateprovider2', dispatcho)
+            }
+            else {
+
+                dispatch({
+                    type: 'LOGGED_IN_USER',
+                    payload: null
+                });
+            }
+        });
+
+        return () => unsubscribe();
+    }, []);
 
     return <StateContext.Provider value={value}>
         {children}
     </StateContext.Provider>
 };
 
-const useStateValue = () => useContext(StateContext)
 
 export { StateContext, StateProvider, useStateValue }
