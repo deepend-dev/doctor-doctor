@@ -55,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
         flexDirection: 'column',
         height: '100%',
         alignItems: 'center',
+        justifyContent: 'center',
 
         [theme.breakpoints.down('xs')]: {
             marginTop: theme.spacing(3),
